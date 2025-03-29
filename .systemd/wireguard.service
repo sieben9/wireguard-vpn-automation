@@ -1,0 +1,16 @@
+[Unit]
+Description=WireGuard VPN Server
+Requires=docker.service
+After=docker.service
+
+[Service]
+Type=oneshot
+RemainAfterExit=yes
+WorkingDirectory=/opt/wireguard-vpn-setup
+ExecStart=/opt/wireguard-vpn-setup/bin/start.sh
+ExecStop=/opt/wireguard-vpn-setup/bin/stop.sh
+ExecReload=/opt/wireguard-vpn-setup/bin/restart.sh
+TimeoutStartSec=0
+
+[Install]
+WantedBy=multi-user.target 

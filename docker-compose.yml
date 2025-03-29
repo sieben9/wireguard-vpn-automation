@@ -1,0 +1,27 @@
+version: "3.8"
+
+services:
+  wireguard:
+    network_mode: "host"
+    image: lscr.io/linuxserver/wireguard:latest
+    container_name: wireguard
+    cap_add:
+      - NET_ADMIN
+      - SYS_MODULE
+    environment:
+      - PUID=1000
+      - PGID=1000
+      - TZ=Europe/Berlin
+      - SERVERURL=your.server.ip.address
+      - SERVERPORT=51820
+      - PEERDNS=1.1.1.1
+      - INTERNAL_SUBNET=10.13.13.0/29
+    volumes:
+      - wireguard-config:/config
+      - ./config:/etc/wireguard/peers
+      # Uncomment the next line only if your host system needs kernel module loading
+      # - /lib/modules:/lib/modules:ro
+    restart: unless-stopped
+
+volumes:
+  wireguard-config: 
